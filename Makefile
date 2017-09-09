@@ -12,6 +12,12 @@ installenv:
 	@test -d ${VENV} && virtualenv ${VENV} || virtualenv .venv
 
 
+.PHONY: run
+run: req-venv
+	# run the Flask server
+	@python hypeanalysis/run.py ${PORT}
+
+
 .PHONY: init
 init: req-venv
 	# upgrade PIP on virtual environment
