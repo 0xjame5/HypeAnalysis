@@ -25,7 +25,7 @@ class StdOutListener(StreamListener):
 
     def on_data(self, data):
         json_data = json.loads(data)
-        json_f.write(data)
+        json_f.writed(ata)
         # testing_queue.put(json_data)
         # print json_data
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         track_tags = ['bitcoin', 'bitcoin price', 'crypto', 'blockchain', 'cryptocurrency', 'BTC', '$BTC', 'crypto market', 
       'bitcoin crash', 'bitcoin china', 'satoshi nakamoto', 'crypto trading']
 
-        stream.filter(track=track_tags, async=True)
+        stream.filter(languages=["en"] track=track_tags, async=True)
 
     except KeyboardInterrupt:
         sys.exit(1)
