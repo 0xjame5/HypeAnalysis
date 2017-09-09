@@ -1,0 +1,4 @@
+# Python cache and environments
+/.venv*/
+*.pyc
+__pycache__/
