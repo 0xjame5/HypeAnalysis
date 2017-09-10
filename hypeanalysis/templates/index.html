@@ -13,20 +13,18 @@
         <div class="hype-chart" style="position: relative">
           <canvas id="hypeChart" width="400" height="400"></canvas>
           <script>
-          var json_data = {{ data|tojson|safe }};
-
+            var json_data = {{ data|tojson|safe }};
 
             var ctx = document.getElementById("hypeChart").getContext('2d');
             var hypeChart = new Chart(ctx, {
               type: 'line',
               data: {
-                labels: ["Bitcoin"],
                 datasets: [{
-                  label: "Date",
+                  yAxisID: 'Sentiment',
+                  xAxisID: 'Date',
                   data: [json_data]
                 }]
-              },
-
+              }
             });
           </script>
         </div>
