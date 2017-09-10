@@ -7,6 +7,8 @@ import time
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
+from textutil import normalize_text
+
 sid = SentimentIntensityAnalyzer()
 START_TIME = "Sat Sep 09 19:25:11 +0000 2017"
 END_TIME = "Sat Sep 09 19:27:03 +0000 2017"
@@ -30,7 +32,8 @@ data = {}
 with open("file_of_json.txt") as output_file:
     for i, line in enumerate(output_file):
         line = dict(json.loads(line))
-        data[twitter_time_to_epoch_time(line["created_at"])] = line["text"]
+        data[twitter_time_to_epoch_time(
+            line["created_at"])] = normalize_text(line["text"])
 
 data = [
     {
