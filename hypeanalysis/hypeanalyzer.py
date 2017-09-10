@@ -40,4 +40,6 @@ data = [
 ]
 
 data = sorted(data, key=lambda x: x["date"])
-print(data)
+
+with open('data.json', 'w') as outfile:
+    json.dump(data, outfile)
