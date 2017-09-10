@@ -16,4 +16,4 @@ if __name__ == "__main__":
 
     # parse arguments to pass into function
     args = parser.parse_args()
-    app.run(port=int(args.port))
+    app.run(port=int(args.port), debug=True)
