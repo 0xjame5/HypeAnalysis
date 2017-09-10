@@ -2,3 +2,4 @@
 /.venv*/
 *.pyc
 __pycache__/
+file_of_json.txt
