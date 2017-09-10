@@ -5,12 +5,18 @@ from flask import render_template
 
 from config import app
 
+import json
+import ast
 
 @app.route('/')
 def home():
     """Returns home"""
-    return render_template('index.html')
 
+    with open('hypeanalysis/data.json', 'r') as data_j:
+        data = data_j.read()
+
+    data = json.loads(data)
+    return render_template('index.html', data=data)
 
 # no toda via
 # @app.errorhandler(404)
