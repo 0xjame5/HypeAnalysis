@@ -1,44 +1,43 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import json
+import time
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import numpy as np
 
 sid = SentimentIntensityAnalyzer()
+START_TIME = "Sat Sep 09 19:25:11 +0000 2017"
+END_TIME = "Sat Sep 09 19:27:03 +0000 2017"
 
 
-class CompoundSentiment(object):
+def get_date(date_str):
 
-    @staticmethod
-    def trimmed_mean(data, m=2.):
+    time_struct = time.strptime(date_str, "%a %b %d %H:%M:%S +0000 %Y")
+    date = datetime.fromtimestamp(time.mktime(time_struct))
 
-        d = np.abs(data - np.median(data))
-        mdev = np.median(d)
-        s = d / mdev if mdev else 0.
-
-        return np.mean(data[s < m])
-
-    @staticmethod
-    def get_compound(date, text):
-
-        compound = np.zeros(len(text))
-        for i, sentence in enumerate(text):
-            compound[i] = sid.polarity_scores(sentence)["compound"]
-
-        return {
-            "date": date,
-            "sentiment": CompoundSentiment().trimmed_mean(compound),
-        }
-
-    def get_sentiment(self, data):
-
-        return json.dumps([
-            self.get_compound(date, text) for date, text in data.items()
-        ])
+    return date
 
 
-if __name__ == '__main__':
+def twitter_time_to_epoch_time(date_str):
 
-    print(CompoundSentiment().get_sentiment(dict(input())))
+    return get_date(date_str).strftime('%s')
+
+
+data = {}
+
+with open("file_of_json.txt") as output_file:
+    for i, line in enumerate(output_file):
+        line = dict(json.loads(line))
+        data[twitter_time_to_epoch_time(line["created_at"])] = line["text"]
+
+data = [
+    {
+        "date": date,
+        "sentiment": sid.polarity_scores(text)["compound"],
+    } for date, text in data.items()
+]
+
+data = sorted(data, key=lambda x: x["date"])
+print(data)
