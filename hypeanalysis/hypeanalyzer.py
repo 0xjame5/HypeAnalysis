@@ -45,4 +45,4 @@ data = [
 data = sorted(data, key=lambda x: x["date"])
 
 with open('data.json', 'w') as outfile:
-    json.dump(data, outfile)
+    json.dump(data, outfile, ensure_ascii=False)
